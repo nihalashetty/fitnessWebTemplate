@@ -171,37 +171,37 @@
         </div>
         <div class="owl-carousel owl-carousel-video owl-theme">
           <a class="yt-carousel">
-            <iframe width="450" height="300" src="https://www.youtube.com/embed/CHs9_Smx2-E" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="youtube-player" data-id="CHs9_Smx2-E"></div>
             <div class="footerText">
               <h5>Priyanka Lost 6 Kgs & 4.5 Inches in 1st Month</h5>
             </div>
           </a>
           <a class="yt-carousel">
-            <iframe width="450" height="300" src="https://www.youtube.com/embed/ZlhaCsllyKs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="youtube-player" data-id="ZlhaCsllyKs"></div>
             <div class="footerText">
               <h5>Aruna Lost 7 kgs in 3 months + Cured PCOD & THYROID</h5>
             </div>
           </a>
           <a class="yt-carousel">
-            <iframe width="450" height="300" src="https://www.youtube.com/embed/6_mvvS3YjFc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="youtube-player" data-id="6_mvvS3YjFc"></div>
             <div class="footerText">
               <h5>Jaspreet Reduced 5 kgs in 2 months + Cured PCOD, improved THYROID</h5>
             </div>
           </a>
           <a class="yt-carousel">
-            <iframe width="450" height="300" src="https://www.youtube.com/embed/sa6K94baD-8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="youtube-player" data-id="sa6K94baD-8"></div>
             <div class="footerText">
               <h5>Deepika Reduced 30 kgs in 1 Year!!</h5>
             </div>
           </a>
           <a class="yt-carousel">
-            <iframe width="450" height="300" src="https://www.youtube.com/embed/DWMKPFKhexs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="youtube-player" data-id="DWMKPFKhexs"></div>
             <div class="footerText">
               <h5>Pooja Cured PCOD & Lost Weight</h5>
             </div>
           </a>
           <a class="yt-carousel">
-            <iframe width="450" height="300" src="https://www.youtube.com/embed/YaHWtJ3FxQE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="youtube-player" data-id="YaHWtJ3FxQE"></div>
             <div class="footerText">
               <h5>Rishika Lost 7.5 Kgs & Inch Loss in 3 Months</h5>
             </div>
@@ -1060,12 +1060,99 @@
   <script src="js/jquery.fancybox.min.js"></script>
   <script src="js/jquery.sticky.js"></script>
   <script src="js/jquery.mb.YTPlayer.min.js"></script>
-
-
-
-
   <script src="js/main.js"></script>
+  <script>
+    /*
+     * Light YouTube Embeds by @labnol
+     * Credit: https://www.labnol.org/
+     */
+  
+    function labnolIframe(div) {
+      var iframe = document.createElement('iframe');
+      iframe.setAttribute('src', 'https://www.youtube.com/embed/' + div.dataset.id + '?autoplay=1&rel=0');
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allowfullscreen', '1');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+      div.parentNode.replaceChild(iframe, div);
+    }
+  
+    function initYouTubeVideos() {
+      var playerElements = document.getElementsByClassName('youtube-player');
+      for (var n = 0; n < playerElements.length; n++) {
+        var videoId = playerElements[n].dataset.id;
+        var div = document.createElement('div');
+        div.setAttribute('data-id', videoId);
+        var thumbNode = document.createElement('img');
+        thumbNode.src = '//i.ytimg.com/vi/ID/hqdefault.jpg'.replace('ID', videoId);
+        div.appendChild(thumbNode);
+        var playButton = document.createElement('div');
+        playButton.setAttribute('class', 'play');
+        div.appendChild(playButton);
+        div.onclick = function () {
+          labnolIframe(this);
+        };
+        playerElements[n].appendChild(div);
+      }
+    }
+  
+    document.addEventListener('DOMContentLoaded', initYouTubeVideos);
+  </script>
+<style>
+  .youtube-player {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+    background: #000;
+    margin: 5px;
+  }
 
+  .youtube-player iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background: transparent;
+  }
+
+  .youtube-player img {
+    object-fit: cover;
+    display: block;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border: none;
+    height: auto;
+    cursor: pointer;
+    -webkit-transition: 0.4s all;
+    -moz-transition: 0.4s all;
+    transition: 0.4s all;
+  }
+
+  .youtube-player img:hover {
+    -webkit-filter: brightness(75%);
+  }
+
+  .youtube-player .play {
+    height: 72px;
+    width: 72px;
+    left: 50%;
+    top: 50%;
+    margin-left: -36px;
+    margin-top: -36px;
+    position: absolute;
+    background: url('//i.imgur.com/TxzC70f.png') no-repeat;
+    cursor: pointer;
+  }
+</style>
 </body>
 
 </html>
