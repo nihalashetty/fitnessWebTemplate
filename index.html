@@ -1066,12 +1066,15 @@
      * Light YouTube Embeds by @labnol
      * Credit: https://www.labnol.org/
      */
-  
+
     function labnolIframe(div) {
       var iframe = document.createElement('iframe');
-      iframe.setAttribute('src', 'https://www.youtube.com/embed/' + div.dataset.id + '?autoplay=1&rel=0');
+      iframe.setAttribute('src', 'https://www.youtube.com/embed/' + div.dataset.id + '?autoplay=1&rel=0?enablejsapi=1&version=3&playerapiid=ytplayer');
+      iframe.setAttribute('modestbranding', '0');
+      iframe.setAttribute('controls', '0');
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('allowfullscreen', '1');
+      iframe.setAttribute('class', 'youtube-video');
       iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
       div.parentNode.replaceChild(iframe, div);
     }
@@ -1082,6 +1085,7 @@
         var videoId = playerElements[n].dataset.id;
         var div = document.createElement('div');
         div.setAttribute('data-id', videoId);
+        div.setAttribute('class', 'youtube-video1');
         var thumbNode = document.createElement('img');
         thumbNode.src = '//i.ytimg.com/vi/ID/hqdefault.jpg'.replace('ID', videoId);
         div.appendChild(thumbNode);
@@ -1096,6 +1100,49 @@
     }
   
     document.addEventListener('DOMContentLoaded', initYouTubeVideos);
+
+    var onesPlayed = false;
+    var playing = false;
+    window.addEventListener('scroll', function() {
+      var element = document.querySelector('#classes-section');
+      var position = element.getBoundingClientRect();
+
+      // checking whether fully visible
+      if(position.top >= 0 && position.bottom <= window.innerHeight) {
+        console.log('Element is partially visible in screen');
+        if (!onesPlayed) {
+          $('.owl-item.active').first().find('.play').trigger('click')
+        }
+
+        setTimeout(() => {
+          if (!playing) {
+            $('.owl-item.active').first().find('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+          }
+        }, 200);
+      }
+
+      // checking for partial visibility
+      if(position.top < window.innerHeight && position.bottom >= 0) {
+        console.log('Element is fully visible in screen');
+        setTimeout(() => {
+          if (!onesPlayed) {
+            onesPlayed = true;
+            // $('.owl-item.active').first().find('.play').click()
+          }
+        }, 5000);
+
+        setTimeout(() => {
+          if (!playing) {
+            // $('.owl-item.active').first().find('.youtube-video')[0].contentWindow.postMessage('{"event":"command","func":"' + 'stopVideo' + '","args":""}', '*');
+          }
+        }, 200);
+      }
+    });
+
+    setTimeout(() => {
+      $('.owl-item.active').first().find('.youtube-video1').trigger('click')
+
+    }, 5000);
   </script>
 <style>
   .youtube-player {
