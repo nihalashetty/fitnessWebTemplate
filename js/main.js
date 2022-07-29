@@ -287,15 +287,19 @@ jQuery(document).ready(function($) {
 	});
 
 	$('.owl-carousel-video').owlCarousel({
-        items : 2, //10 items above 1000px browser width
+        items : 1, //10 items above 1000px browser width
       	itemsDesktop : [1000,2], //5 items between 1000px and 901px
         merge:true,
-        loop:true,
+        loop:false,
         margin:20,
         video:true,
+		lazyload: true,
 		autoPlay: true,
 		paginationSpeed: 4000,
         responsive:{
+			200: {
+				item: 1
+			},
             480:{
                 items:1
             },
