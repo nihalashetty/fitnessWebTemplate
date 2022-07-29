@@ -29,10 +29,12 @@
 
 </head>
 
-<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
-
-  <div class="site-wrap">
-
+<body data-spy="scroll" data-target=".site-navbar-target" data-offset="300" onload="myFunction()" >
+  <div id="loader"></div>
+  <p id="continue-button" style="display: none;">
+    <a class="btn btn-primary smoothscroll py-3 px-4">CLICK TO CONTINUE</a>
+  </p>
+  <div class="site-wrap" id="site-wrap" style="display:none;">
     <div class="site-mobile-menu site-navbar-target">
       <div class="site-mobile-menu-header">
         <div class="site-mobile-menu-close mt-3">
@@ -169,7 +171,7 @@
         </div>
         <div class="owl-carousel owl-carousel-video owl-theme">
           <a class="yt-carousel">
-            <video id="my-video" class="video-js" muted="muted" controls preload="auto" width="500" height="auto" poster="ZUMBA" data-setup="{}">
+            <video id="my-video" class="video-js" controls preload="auto" width="500" height="auto" poster="ZUMBA" data-setup="{}">
               <source src="images/zumba.mp4" type="video/mp4" />
               <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that</p>
             </video>
@@ -1081,8 +1083,86 @@
         myPlayer.pause()
       }
     });
+
+  function myFunction() {
+    myVar = setTimeout(showPage, 3000);
+  }
+
+  function showPage() {
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("continue-button").style.display = "block";
+  }
+
+  $('#continue-button a').on('click', () => {
+    $('#site-wrap').css('display', 'block');
+    $('#continue-button').css('display', 'none');
+  });
+
   </script>
 <style>
+  #continue-button {
+    position: absolute;
+    display: none;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    width: 120px;
+    height: 120px;
+    /* margin: -76px 0 0 -76px; */
+  }
+
+  #continue-button a {
+    color: white;
+    background-color: black;
+  }
+
+  #loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* Add animation to "page content" */
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+  }
+
+  @-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+  }
+
+  @keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+  }
+
+  .site-wrap {
+    display: none;
+  }
   .youtube-player {
     position: relative;
     padding-bottom: 56.25%;
